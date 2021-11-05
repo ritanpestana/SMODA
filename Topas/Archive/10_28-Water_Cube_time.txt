@@ -1,0 +1,307 @@
+# Water Sphere and proton beam, including the colimator
+
+#########################################
+####          GEOMETRY               ####
+#########################################
+
+d:Ge/BeamZ/Position = -5. cm - Ge/Sphere/HalfSide #First value is the offset betwen the exit of the nose and the water sphere
+d:Ge/Sphere/HalfSide = 2. cm
+
+### World ###
+s:Ge/World/Type     = "TsBox"
+s:Ge/World/Material = "Air"
+d:Ge/World/HLX      = 25. cm
+d:Ge/World/HLY      = 25. cm
+d:Ge/World/HLZ      = 25. cm
+d:Ge/World/TransX   = 0. cm
+d:Ge/World/TransY   = 0. cm
+d:Ge/World/TransZ   = 0. cm
+d:Ge/World/RotX     = 0. deg
+d:Ge/World/RotY     = 0. deg
+d:Ge/World/RotZ     = 0. deg
+
+### Material Definition ###
+d:Ma/Water/Density = 1. g/cm3
+sv:Ma/Water/Components = 2 "Hydrogen" "Oxygen"
+uv:Ma/Water/Fractions = 2 0.666 0.334 
+
+d:Ma/Copper/Density = 8.96 g/cm3
+sv:Ma/Copper/Components = 1 "Copper"
+uv:Ma/Copper/Fractions = 1 1. 
+
+d:Ma/Kapton/Density = 1.42 g/cm3
+sv:Ma/Kapton/Components = 4 "Hydrogen" "Carbon" "Nitrogen" "Oxygen"
+uv:Ma/Kapton/Fractions = 4 0.026362 0.691133 0.073270 0.209235 
+
+d:Ma/Al/Density = 2.7 g/cm3
+sv:Ma/Al/Components = 1 "Aluminum"
+uv:Ma/Al/Fractions = 1 1.0
+
+### Aluminium Target ###
+#s:Ge/AlTarget/Type     = "TsBox"
+#s:Ge/AlTarget/Parent   = "World"
+#s:Ge/AlTarget/Material = "Al"
+#d:Ge/AlTarget/HLX      = Ge/Sphere/HalfSide cm
+#d:Ge/AlTarget/HLY      = Ge/Sphere/HalfSide cm
+#d:Ge/AlTarget/HLZ      = 600 nm
+#d:Ge/AlTarget/TransX   = 0. cm
+#d:Ge/AlTarget/TransY   = 0. cm
+#d:Ge/AlTarget/TransZ   = -2.5 cm
+#d:Ge/AlTarget/RotX     = 0. deg
+#d:Ge/AlTarget/RotY     = 0. deg
+#d:Ge/AlTarget/RotZ     = 0. deg
+#i:Sc/AlTarget/XBins = 100
+#i:Sc/AlTarget/YBins = 100
+#i:Sc/AlTarget/ZBins = 100
+
+### Time Feature ###
+
+s:Tf/BackStep/Function = "Linear cm"
+d:Tf/BackStep/Rate = 1 cm/s
+d:Tf/BackStep/StartValue = -3.0 cm
+d:Tf/BackStep/RepetitionInterval = 3.0 s
+
+s:Tf/ForwardStep/Function = "Linear cm"
+d:Tf/ForwardStep/Rate = -1 cm/s
+d:Tf/ForwardStep/StartValue = 3.0 cm
+d:Tf/ForwardStep/RepetitionInterval = 3.0 s
+
+s:Tf/YPosition/Function           = "Step"
+dv:Tf/YPosition/Times             = 2 3.0 6.0 s
+dv:Tf/YPosition/Values            = 2 Tf/BackStep/Value Tf/ForwardStep/Value cm
+d:Tf/YPosition/RepetitionInterval = 6. s
+
+i:Tf/NumberOfSequentialTimes = 60
+d:Tf/TimelineEnd = 6 s
+
+### Aluminium Wire ###
+s:Ge/AlWire/Type     = "TsCylinder"
+s:Ge/AlWire/Parent   = "World"
+s:Ge/AlWire/Material = "Al"
+d:Ge/AlWire/RMax     = 2. mm
+d:Ge/AlWire/HL       = Ge/Sphere/HalfSide + 0.5 cm
+d:Ge/AlWire/TransX   = 0. cm
+d:Ge/AlWire/TransY   = Tf/YPosition/Value cm
+d:Ge/AlWire/TransZ   = -2.5 cm #Ge/Sphere/HalfSide - 0.5 cm
+d:Ge/AlWire/RotX     = 0. deg
+d:Ge/AlWire/RotY     = 90. deg
+d:Ge/AlWire/RotZ     = 0. deg
+s:Ge/AlWire/Color    = "red"
+i:Ge/AlWire/RBins    = 2
+
+### Water Cube ###
+s:Ge/WaterCube/Type     = "TsBox"
+s:Ge/WaterCube/Parent   = "World"
+s:Ge/WaterCube/Material = "Water"
+d:Ge/WaterCube/HLX      = Ge/Sphere/HalfSide cm
+d:Ge/WaterCube/HLY      = Ge/Sphere/HalfSide cm
+d:Ge/WaterCube/HLZ      = Ge/Sphere/HalfSide cm
+d:Ge/WaterCube/TransX   = 0. cm
+d:Ge/WaterCube/TransY   = 0. cm
+d:Ge/WaterCube/TransZ   = 0. cm
+d:Ge/WaterCube/RotX     = 0. deg
+d:Ge/WaterCube/RotY     = 0. deg
+d:Ge/WaterCube/RotZ     = 0. deg
+i:Sc/WaterCube/XBins = 100
+i:Sc/WaterCube/YBins = 100
+i:Sc/WaterCube/ZBins = 100
+
+### Copper Colimator ###
+s:Ge/Colimator/Type     = "TsCylinder"
+s:Ge/Colimator/Parent   = "World"
+s:Ge/Colimator/Material = "Copper"
+d:Ge/Colimator/RMin     = 3. mm
+d:Ge/Colimator/RMax     = 5. mm
+d:Ge/Colimator/HL       = 35.375 mm
+d:Ge/Colimator/TransX   = 0. cm
+d:Ge/Colimator/TransY   = 0. cm
+d:Ge/Colimator/TransZ   = Ge/BeamZ/Position - 3.5375 cm
+d:Ge/Colimator/RotX     = 0. deg
+d:Ge/Colimator/RotY     = 0. deg
+d:Ge/Colimator/RotPhi     = 90. deg
+s:Ge/Colimator/Color    = "blue"
+#i:Ge/Colimator/RBins    = 2
+
+### Vacuum inside the Colimator ###
+s:Ge/VacuumCol/Type     = "TsCylinder"
+s:Ge/VacuumCol/Parent   = "World"
+s:Ge/VacuumCol/Material = "Vacuum"
+d:Ge/VacuumCol/RMax     = 3. mm
+d:Ge/VacuumCol/HL       = 35.375 mm
+d:Ge/VacuumCol/TransX   = 0. cm
+d:Ge/VacuumCol/TransY   = 0. cm
+d:Ge/VacuumCol/TransZ   = Ge/BeamZ/Position - 3.5375 cm
+d:Ge/VacuumCol/RotX     = 0. deg
+d:Ge/VacuumCol/RotY     = 0. deg
+d:Ge/VacuumCol/RotZ     = 0. deg
+#i:Ge/VacuumCol/RBins    = 2
+
+### Kapton Film (larger colimator) ###
+s:Ge/KaptonFilm/Type     = "TsCylinder"
+s:Ge/KaptonFilm/Parent   = "World"
+s:Ge/KaptonFilm/Material = "Kapton"
+d:Ge/KaptonFilm/RMax     = 3. mm
+d:Ge/KaptonFilm/HL       = 0.00125 mm
+d:Ge/KaptonFilm/TransX   = 0. cm
+d:Ge/KaptonFilm/TransY   = 0. cm
+d:Ge/KaptonFilm/TransZ   = Ge/BeamZ/Position + 0.0025 cm
+d:Ge/KaptonFilm/RotX     = 0. deg
+d:Ge/KaptonFilm/RotY     = 0. deg
+d:Ge/KaptonFilm/RotZ     = 0. deg
+#i:Ge/KaptonFilm/RBins    = 2
+
+#########################################
+####            SOURCE               ####
+#########################################
+
+### Beam position ###
+s:Ge/BeamPosition/Parent = "World"
+s:Ge/BeamPosition/Type = "Group"
+d:Ge/BeamPosition/TransX = 0. m
+d:Ge/BeamPosition/TransY = 0. m
+d:Ge/BeamPosition/TransZ = Ge/BeamZ/Position - 1. cm
+d:Ge/BeamPosition/RotX = 0. deg
+d:Ge/BeamPosition/RotY = 0. deg
+d:Ge/BeamPosition/RotZ = 0. deg
+
+### Particle source ###
+s:So/ProtonSource/Type = "Beam" # Beam, Isotropic, Emittance or PhaseSpace
+s:So/ProtonSource/Component = "BeamPosition"
+s:So/ProtonSource/BeamParticle = "proton"
+d:So/ProtonSource/BeamEnergy = 10. MeV
+u:So/ProtonSource/BeamEnergySpread = 1. #=0.1 MeV/10 MeV * 100
+s:So/ProtonSource/BeamPositionDistribution = "Gaussian" # Flat or Gaussian
+s:So/ProtonSource/BeamPositionCutoffShape = "Ellipse" # Point, Ellipse, Rectangle or Isotropic
+d:So/ProtonSource/BeamPositionCutoffX = 0.5 mm
+d:So/ProtonSource/BeamPositionCutoffY = 0.5 mm
+d:So/ProtonSource/BeamPositionSpreadX = 0.3 mm
+d:So/ProtonSource/BeamPositionSpreadY = 0.3 mm
+s:So/ProtonSource/BeamAngularDistribution = "Gaussian" # Flat or Gaussian
+d:So/ProtonSource/BeamAngularCutoffX = 0.1 deg # almost twice the size of the beam
+d:So/ProtonSource/BeamAngularCutoffY = 0.1 deg
+d:So/ProtonSource/BeamAngularSpreadX = 0.0032 rad
+d:So/ProtonSource/BeamAngularSpreadY = 0.0032 rad
+i:So/ProtonSource/NumberOfHistoriesInRun = 100
+#i:So/ProtonSource/NumberOfHistoriesInRandomJob = 10
+
+
+### View window ###
+s:Gr/ViewA/Type             = "OpenGL"
+i:Gr/ViewA/WindowSizeX      = 1024
+i:Gr/ViewA/WindowSizeY      = 768
+b:Gr/ViewA/IncludeAxes      = "True"
+d:Gr/ViewA/Theta            = 90 deg
+d:Gr/ViewA/Phi              = 0 deg
+s:Gr/ViewA/Projection       = "Perspective"
+d:Gr/ViewA/PerspectiveAngle = 30 deg
+s:Gr/ViewA/AxesComponent    = "World"
+d:Gr/ViewA/AxesSize         = 0.6 m
+u:Gr/ViewA/Zoom             = 2.
+#b:Ts/PauseBeforeQuit = "True"
+
+
+#########################################
+####           SCORERS               ####
+#########################################
+
+### Count Scorer ###
+s:Sc/CountSphere/Quantity = "EffectiveCharge"
+s:Sc/CountSphere/Component = "WaterCube"
+sv:Sc/CountSphere/OnlyIncludeParticlesNamed = 1 "proton"
+s:Sc/CountSphere/OutputFile = "counts_water"
+s:Sc/CountSphere/OutputType = "csv" 
+i:Sc/CountSphere/EBins = 1000 # defaults to 1, that is, un-binned
+d:Sc/CountSphere/EBinMin = 0. MeV # defaults to zero
+d:Sc/CountSphere/EBinMax = 10. MeV # must be specified if EBins is greater than 1
+s:Sc/CountSphere/EBinEnergy = "IncidentTrack" # "IncidentTrack", "PreStep" or "DepositedInStep"
+s:Sc/CountSphere/IfOutputFileAlreadyExists = "Overwrite"
+
+### PhaseSpaceCubeASCII ###
+# Tuple scorer. By default includes physical and chemical track.
+# For the physical track: the position and PDG Encoding
+# For the chemical track: the position at TimeCut and moleculeID
+s:Sc/PhaseSpaceCubeASCII/Quantity = "PhaseSpace"
+#s:Sc/PhaseSpaceCubeASCII/Component = "WaterCube"
+s:Sc/PhaseSpaceCubeASCII/Surface = "WaterCube/ZMinusSurface"
+s:Sc/PhaseSpaceCubeASCII/OutputType = "ASCII"
+#b:Sc/PhaseSpaceCubeASCII/PropagateToChildren      = "true"
+b:Sc/PhaseSpaceCubeASCII/OutputToConsole = "True"
+s:Sc/PhaseSpaceCubeASCII/IfOutputFileAlreadyExists = "Overwrite"
+s:Sc/PhaseSpaceCubeASCII/OutputFile = "PhaseSpace"
+sv:Sc/PhaseSpaceCubeASCII/OnlyIncludeParticlesNamed = 1 "proton"
+#b:Sc/PhaseSpaceCubeASCII/IncludeParticleName = "True"
+b:Sc/PhaseSpaceCubeASCII/IncludePhysicalProcessName  = "True"
+b:Sc/PhaseSpaceCubeASCII/IncludeEventID = "True"
+b:Sc/PhaseSpaceCubeASCII/IncludeTrackID = "True"
+b:Sc/PhaseSpaceCubeASCII/IncludeParentID = "False"
+# Step number in the scoring region
+b:Sc/PhaseSpaceCubeASCII/IncludeStepNumber = "False"
+# Time of flight
+b:Sc/PhaseSpaceCubeASCII/IncludeGlobalTime = "False"
+# Energy deposited by the tracks and kinetic energy at
+# scoring site.
+b:Sc/PhaseSpaceCubeASCII/IncludeEnergyDeposited = "True"
+b:Sc/PhaseSpaceCubeASCII/IncludeKineticEnergy   = "True"
+# Geometrical information
+b:Sc/PhaseSpaceCubeASCII/IncludeVolumeName = "True"
+#b:Sc/PhaseSpaceCubeASCII/IncludeVolumeCopyNumber = "False"
+#b:Sc/PhaseSpaceCubeASCII/IncludeVertexPosition = "False"
+
+
+### PhaseSpaceCubeRoot ###
+s:Sc/PhaseSpaceCubeROOT/Quantity                    = "PhaseSpace"
+b:Sc/PhaseSpaceCubeROOT/OutputToConsole             = "True"
+s:Sc/PhaseSpaceCubeROOT/Surface                     = "WaterCube/ZMinusSurface"
+s:Sc/PhaseSpaceCubeROOT/OutputType                  = "ROOT" # ASCII, Binary, Limited or ROOT
+s:Sc/PhaseSpaceCubeROOT/OutputFile                  = "OutputCube"
+i:Sc/PhaseSpaceCubeROOT/OutputBufferSize            = 1000
+#b:Sc/PhaseSpaceCubeROOT/PropagateToChildren      = "true"
+#b:Sc/PhaseSpaceCubeROOT/OutputToConsole = "True"
+s:Sc/PhaseSpaceCubeROOT/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/PhaseSpaceCubeROOT/OnlyIncludeParticlesNamed = 1 "proton"
+#b:Sc/PhaseSpaceCubeROOT/IncludeParticleName = "True"
+b:Sc/PhaseSpaceCubeROOT/IncludePhysicalProcessName  = "True"
+b:Sc/PhaseSpaceCubeROOT/IncludeEventID = "True"
+b:Sc/PhaseSpaceCubeROOT/IncludeTrackID = "True"
+b:Sc/PhaseSpaceCubeROOT/IncludeParentID = "False"
+# Step number in the scoring region
+b:Sc/PhaseSpaceCubeROOT/IncludeStepNumber = "False"
+# Time of flight
+b:Sc/PhaseSpaceCubeROOT/IncludeGlobalTime = "False"
+# Energy deposited by the tracks and kinetic energy at
+# scoring site.
+b:Sc/PhaseSpaceCubeROOT/IncludeEnergyDeposited = "True"
+#b:Sc/PhaseSpaceCubeROOT/IncludeKineticEnergy   = "True"
+# Geometrical information
+b:Sc/PhaseSpaceCubeROOT/IncludeVolumeName = "True"
+#b:Sc/PhaseSpaceCubeROOT/IncludeVolumeCopyNumber = "False"
+#b:Sc/PhaseSpaceCubeROOT/IncludeVertexPosition = "False"
+
+### PhaseSpaceCylinderRoot ###
+s:Sc/PhaseSpaceCylinderROOT/Quantity                    = "PhaseSpace"
+b:Sc/PhaseSpaceCylinderROOT/OutputToConsole             = "True"
+s:Sc/PhaseSpaceCylinderROOT/Surface                     = "AlWire/AnySurface"
+s:Sc/PhaseSpaceCylinderROOT/OutputType                  = "ROOT" # ASCII, Binary, Limited or ROOT
+s:Sc/PhaseSpaceCylinderROOT/OutputFile                  = "OutputCylinder"
+i:Sc/PhaseSpaceCylinderROOT/OutputBufferSize            = 1000
+#b:Sc/PhaseSpaceCylinderROOT/PropagateToChildren      = "true"
+#b:Sc/PhaseSpaceCylinderROOT/OutputToConsole = "True"
+s:Sc/PhaseSpaceCylinderROOT/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/PhaseSpaceCylinderROOT/OnlyIncludeParticlesNamed = 1 "proton"
+#b:Sc/PhaseSpaceCylinderROOT/IncludeParticleName = "True"
+b:Sc/PhaseSpaceCylinderROOT/IncludePhysicalProcessName  = "True"
+b:Sc/PhaseSpaceCylinderROOT/IncludeEventID = "True"
+b:Sc/PhaseSpaceCylinderROOT/IncludeTrackID = "True"
+b:Sc/PhaseSpaceCylinderROOT/IncludeParentID = "False"
+# Step number in the scoring region
+b:Sc/PhaseSpaceCylinderROOT/IncludeStepNumber = "False"
+# Time of flight
+b:Sc/PhaseSpaceCylinderROOT/IncludeGlobalTime = "False"
+# Energy deposited by the tracks and kinetic energy at
+# scoring site.
+b:Sc/PhaseSpaceCylinderROOT/IncludeEnergyDeposited = "True"
+#b:Sc/PhaseSpaceCylinderROOT/IncludeKineticEnergy   = "True"
+# Geometrical information
+b:Sc/PhaseSpaceCylinderROOT/IncludeVolumeName = "True"
+#b:Sc/PhaseSpaceCylinderROOT/IncludeVolumeCopyNumber = "False"
+#b:Sc/PhaseSpaceCylinderROOT/IncludeVertexPosition = "False"
