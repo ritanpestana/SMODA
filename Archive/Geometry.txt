@@ -1,0 +1,62 @@
+### World ###
+s:Ge/World/Type     = "TsBox"
+s:Ge/World/Material = "Air"
+d:Ge/World/HLX      = 25. cm
+d:Ge/World/HLY      = 25. cm
+d:Ge/World/HLZ      = 25. cm
+d:Ge/World/TransX   = 0. cm
+d:Ge/World/TransY   = 0. cm
+d:Ge/World/TransZ   = 0. cm
+d:Ge/World/RotX     = 0. deg
+d:Ge/World/RotY     = 0. deg
+d:Ge/World/RotZ     = 0. deg
+
+### Water Sphere ###
+s:Ge/WaterSphere/Type      = "TsSphere"
+s:Ge/WaterSphere/Parent    = "World"
+s:Ge/WaterSphere/Material  = "Water"
+d:Ge/WaterSphere/RMax      = Ge/Sphere/Radius cm
+
+### Copper Colimator ###
+s:Ge/Colimator/Type     = "TsCylinder"
+s:Ge/Colimator/Parent   = "World"
+s:Ge/Colimator/Material = "Copper"
+d:Ge/Colimator/RMin     = 3. mm
+d:Ge/Colimator/RMax     = 5. mm
+d:Ge/Colimator/HL       = 35.375 mm
+d:Ge/Colimator/TransX   = 0. cm
+d:Ge/Colimator/TransY   = 0. cm
+d:Ge/Colimator/TransZ   = Ge/BeamZ/Position - 3.5375 cm
+d:Ge/Colimator/RotX     = 0. deg
+d:Ge/Colimator/RotY     = 0. deg
+d:Ge/Colimator/RotZ     = 0. deg
+s:Ge/Colimator/Color    = "blue"
+#i:Ge/Colimator/RBins    = 2
+
+### Vacuum inside the Colimator ###
+s:Ge/VacuumCol/Type     = "TsCylinder"
+s:Ge/VacuumCol/Parent   = "World"
+s:Ge/VacuumCol/Material = "Vacuum"
+d:Ge/VacuumCol/RMax     = 3. mm
+d:Ge/VacuumCol/HL       = 35.375 mm
+d:Ge/VacuumCol/TransX   = 0. cm
+d:Ge/VacuumCol/TransY   = 0. cm
+d:Ge/VacuumCol/TransZ   = Ge/BeamZ/Position - 3.5375 cm
+d:Ge/VacuumCol/RotX     = 0. deg
+d:Ge/VacuumCol/RotY     = 0. deg
+d:Ge/VacuumCol/RotZ     = 0. deg
+#i:Ge/VacuumCol/RBins    = 2
+
+### Kapton Film (larger colimator) ###
+s:Ge/KaptonFilm/Type     = "TsCylinder"
+s:Ge/KaptonFilm/Parent   = "World"
+s:Ge/KaptonFilm/Material = "Kapton"
+d:Ge/KaptonFilm/RMax     = 3. mm
+d:Ge/KaptonFilm/HL       = 0.00125 mm
+d:Ge/KaptonFilm/TransX   = 0. cm
+d:Ge/KaptonFilm/TransY   = 0. cm
+d:Ge/KaptonFilm/TransZ   = Ge/BeamZ/Position + 0.0025 cm
+d:Ge/KaptonFilm/RotX     = 0. deg
+d:Ge/KaptonFilm/RotY     = 0. deg
+d:Ge/KaptonFilm/RotZ     = 0. deg
+#i:Ge/KaptonFilm/RBins    = 2

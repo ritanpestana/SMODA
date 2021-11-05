@@ -1,0 +1,58 @@
+# Water Sphere and proton beam, including the colimator
+
+#includeFIle = View_window.txt 
+
+
+d:Ge/BeamZ/Position = -5. cm - Ge/Sphere/Radius #First value is the offset betwen the exit of the nose and the water sphere
+d:Ge/Sphere/Radius = 2. cm
+
+includeFile = Material_definition.txt View_window.txt Geometry.txt
+
+### Beam position ###
+s:Ge/BeamPosition/Parent = "World"
+s:Ge/BeamPosition/Type = "Group"
+d:Ge/BeamPosition/TransX = 0. m
+d:Ge/BeamPosition/TransY = 0. m
+d:Ge/BeamPosition/TransZ = Ge/BeamZ/Position - 1. cm
+d:Ge/BeamPosition/RotX = 0. deg
+d:Ge/BeamPosition/RotY = 0. deg
+d:Ge/BeamPosition/RotZ = 0. deg
+
+### Particle source ###
+s:So/ProtonSource/Type = "Beam" # Beam, Isotropic, Emittance or PhaseSpace
+s:So/ProtonSource/Component = "BeamPosition"
+s:So/ProtonSource/BeamParticle = "proton"
+d:So/ProtonSource/BeamEnergy = 10. MeV
+u:So/ProtonSource/BeamEnergySpread = 1. #=0.1 MeV/10 MeV * 100
+s:So/ProtonSource/BeamPositionDistribution = "Gaussian" # Flat or Gaussian
+s:So/ProtonSource/BeamPositionCutoffShape = "Ellipse" # Point, Ellipse, Rectangle or Isotropic
+d:So/ProtonSource/BeamPositionCutoffX = 0.5 mm
+d:So/ProtonSource/BeamPositionCutoffY = 0.5 mm
+d:So/ProtonSource/BeamPositionSpreadX = 0.3 mm
+d:So/ProtonSource/BeamPositionSpreadY = 0.3 mm
+s:So/ProtonSource/BeamAngularDistribution = "Gaussian" # Flat or Gaussian
+d:So/ProtonSource/BeamAngularCutoffX = 0.1 deg # almost twice the size of the beam
+d:So/ProtonSource/BeamAngularCutoffY = 0.1 deg
+d:So/ProtonSource/BeamAngularSpreadX = 0.0032 rad
+d:So/ProtonSource/BeamAngularSpreadY = 0.0032 rad
+i:So/ProtonSource/NumberOfHistoriesInRun = 1000
+#i:So/ProtonSource/NumberOfHistoriesInRandomJob = 10
+
+
+#i:Sc/WaterSphere/RBins     = 1
+#i:Sc/WaterSphere/PhiBins   = 1
+#i:Sc/WaterSphere/ThetaBins = 1
+
+### Count Scorer ###
+s:Sc/CountSphere/Quantity = "EffectiveCharge"
+s:Sc/CountSphere/Component = "WaterSphere"
+sv:Sc/CountSphere/OnlyIncludeParticlesNamed = 1 "proton"
+s:Sc/CountSphere/OutputFile = "counts_water"
+s:Sc/CountSphere/OutputType = "csv" 
+i:Sc/CountSphere/EBins = 1000 # defaults to 1, that is, un-binned
+d:Sc/CountSphere/EBinMin = 0. MeV # defaults to zero
+d:Sc/CountSphere/EBinMax = 10. MeV # must be specified if EBins is greater than 1
+s:Sc/CountSphere/EBinEnergy = "IncidentTrack" # "IncidentTrack", "PreStep" or "DepositedInStep"
+s:Sc/CountSphere/IfOutputFileAlreadyExists = "Overwrite"
+
+
