@@ -1,0 +1,72 @@
+includeFile = Material.txt
+
+#########################################
+####           SCORERS               ####
+#########################################
+
+### PhaseSpaceCubeRoot ###
+s:Sc/PhaseSpaceCubeROOT/Quantity                    = "PhaseSpace"
+b:Sc/PhaseSpaceCubeROOT/OutputToConsole             = "True"
+s:Sc/PhaseSpaceCubeROOT/Surface                     = "WaterCube/ZMinusSurface"
+s:Sc/PhaseSpaceCubeROOT/OutputType                  = "ROOT" # ASCII, Binary, Limited or ROOT
+s:Sc/PhaseSpaceCubeROOT/OutputFile                  = "OutputCube"
+i:Sc/PhaseSpaceCubeROOT/OutputBufferSize            = 1000
+s:Sc/PhaseSpaceCubeROOT/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/PhaseSpaceCubeROOT/OnlyIncludeParticlesNamed = 1 "proton"
+b:Sc/PhaseSpaceCubeROOT/IncludePhysicalProcessName  = "True"
+b:Sc/PhaseSpaceCubeROOT/IncludeEventID = "True"
+b:Sc/PhaseSpaceCubeROOT/IncludeTrackID = "True"
+b:Sc/PhaseSpaceCubeROOT/IncludeParentID = "False"
+b:Sc/PhaseSpaceCubeROOT/IncludeStepNumber = "False"
+b:Sc/PhaseSpaceCubeROOT/IncludeGlobalTime = "False"
+b:Sc/PhaseSpaceCubeROOT/IncludeEnergyDeposited = "True"
+b:Sc/PhaseSpaceCubeROOT/IncludeVolumeName = "True"
+
+### PhaseSpaceColimatorRoot ###
+s:Sc/PhaseSpaceWireROOT/Quantity                    = "PhaseSpace"
+b:Sc/PhaseSpaceWireROOT/OutputToConsole             = "True"
+s:Sc/PhaseSpaceWireROOT/Surface                     = "AlWire/AnySurface"
+s:Sc/PhaseSpaceWireROOT/OutputType                  = "ROOT" # ASCII, Binary, Limited or ROOT
+s:Sc/PhaseSpaceWireROOT/OutputFile                  = "OutputWire"
+i:Sc/PhaseSpaceWireROOT/OutputBufferSize            = 1000
+s:Sc/PhaseSpaceWireROOT/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/PhaseSpaceWireROOT/OnlyIncludeParticlesNamed = 1 "proton"
+b:Sc/PhaseSpaceWireROOT/IncludePhysicalProcessName  = "True"
+b:Sc/PhaseSpaceWireROOT/IncludeEventID = "True"
+b:Sc/PhaseSpaceWireROOT/IncludeTrackID = "True"
+b:Sc/PhaseSpaceWireROOT/IncludeParentID = "False"
+b:Sc/PhaseSpaceWireROOT/IncludeStepNumber = "False"
+b:Sc/PhaseSpaceWireROOT/IncludeGlobalTime = "False"
+b:Sc/PhaseSpaceWireROOT/IncludeEnergyDeposited = "True"
+b:Sc/PhaseSpaceWireROOT/IncludeVolumeName = "True"
+
+
+s:Sc/PhaseSpaceColimatorROOT/Quantity                    = "PhaseSpace"
+b:Sc/PhaseSpaceColimatorROOT/OutputToConsole             = "True"
+s:Sc/PhaseSpaceColimatorROOT/Surface                     = "KaptonFilm/AnySurface"
+s:Sc/PhaseSpaceColimatorROOT/OutputType                  = "ROOT" # ASCII, Binary, Limited or ROOT
+s:Sc/PhaseSpaceColimatorROOT/OutputFile                  = "OutputColimator"
+i:Sc/PhaseSpaceColimatorROOT/OutputBufferSize            = 1000
+s:Sc/PhaseSpaceColimatorROOT/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/PhaseSpaceColimatorROOT/OnlyIncludeParticlesNamed = 1 "proton"
+b:Sc/PhaseSpaceColimatorROOT/IncludePhysicalProcessName  = "True"
+b:Sc/PhaseSpaceColimatorROOT/IncludeEventID = "True"
+b:Sc/PhaseSpaceColimatorROOT/IncludeTrackID = "True"
+b:Sc/PhaseSpaceColimatorROOT/IncludeParentID = "False"
+b:Sc/PhaseSpaceColimatorROOT/IncludeStepNumber = "False"
+b:Sc/PhaseSpaceColimatorROOT/IncludeGlobalTime = "False"
+b:Sc/PhaseSpaceColimatorROOT/IncludeEnergyDeposited = "True"
+b:Sc/PhaseSpaceColimatorROOT/IncludeVolumeName = "True"
+
+s:Sc/TargetScorer/Component 	= "WaterCube"
+s:Sc/TargetScorer/OutputFile 	= "EDep_Cube"
+s:Sc/TargetScorer/Quantity 	= "EnergyDeposit" 
+s:Sc/TargetScorer/OutputType 	= "csv" 
+#i:Sc/TargetScorer/HistogramBins = 1000 	
+#d:Sc/TargetScorer/HistogramMin = -2. cm
+#d:Sc/TargetScorer/HistogramMax = -1. cm
+#sv:Sc/TargetScorer/Report = 1 "CumulativeVolumeHistogram"
+s:Sc/TargetScorer/IfOutputFileAlreadyExists = "Overwrite"
+i:Sc/TargetScorer/ZBins = 10000 # defaults to 1, that is, un-binned
+#d:Sc/TargetScorer/ZBinMin = -2. cm # defaults to zero
+#d:Sc/TargetScorer/ZBinMax = -1.5 cm # must be specified if EBins is greater than 1

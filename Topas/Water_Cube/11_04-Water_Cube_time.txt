@@ -1,0 +1,172 @@
+# Water Sphere and proton beam, including the Collimator
+
+includeFile = View.txt 
+includeFile = Material.txt
+includeFile = Scorers.txt
+
+#########################################
+####          GEOMETRY               ####
+#########################################
+
+d:Ge/BeamZ/Position = -5. cm - Ge/Sphere/HalfSide #First value is the offset betwen the exit of the nose and the water sphere
+d:Ge/Sphere/HalfSide = 2. cm
+
+### World ###
+s:Ge/World/Type     = "TsBox"
+s:Ge/World/Material = "Air"
+d:Ge/World/HLX      = 25. cm
+d:Ge/World/HLY      = 25. cm
+d:Ge/World/HLZ      = 25. cm
+d:Ge/World/TransX   = 0. cm
+d:Ge/World/TransY   = 0. cm
+d:Ge/World/TransZ   = 0. cm
+d:Ge/World/RotX     = 0. deg
+d:Ge/World/RotY     = 0. deg
+d:Ge/World/RotZ     = 0. deg
+
+### Aluminium Target ###
+#s:Ge/AlTarget/Type     = "TsBox"
+#s:Ge/AlTarget/Parent   = "World"
+#s:Ge/AlTarget/Material = "Al"
+#d:Ge/AlTarget/HLX      = Ge/Sphere/HalfSide cm
+#d:Ge/AlTarget/HLY      = Ge/Sphere/HalfSide cm
+#d:Ge/AlTarget/HLZ      = 600 nm
+#d:Ge/AlTarget/TransX   = 0. cm
+#d:Ge/AlTarget/TransY   = 0. cm
+#d:Ge/AlTarget/TransZ   = -2.5 cm
+#d:Ge/AlTarget/RotX     = 0. deg
+#d:Ge/AlTarget/RotY     = 0. deg
+#d:Ge/AlTarget/RotZ     = 0. deg
+#i:Sc/AlTarget/XBins = 100
+#i:Sc/AlTarget/YBins = 100
+#i:Sc/AlTarget/ZBins = 100
+
+### Time Feature ###
+
+s:Tf/BackStep/Function = "Linear cm"
+d:Tf/BackStep/Rate = 4 cm/s
+d:Tf/BackStep/StartValue = -1. cm
+d:Tf/BackStep/RepetitionInterval = 0.5 s
+
+s:Tf/ForwardStep/Function = "Linear cm"
+d:Tf/ForwardStep/Rate = -4 cm/s
+d:Tf/ForwardStep/StartValue = 1. cm
+d:Tf/ForwardStep/RepetitionInterval = 0.5 s
+
+s:Tf/YPosition/Function           = "Step"
+dv:Tf/YPosition/Times             = 2 0.5 1.0 s
+dv:Tf/YPosition/Values            = 2 Tf/BackStep/Value Tf/ForwardStep/Value cm
+d:Tf/YPosition/RepetitionInterval = 1. s
+
+i:Tf/NumberOfSequentialTimes = 1
+d:Tf/TimelineEnd = 6. s
+
+### Aluminium Wire ###
+s:Ge/AlWire/Type     = "TsCylinder"
+s:Ge/AlWire/Parent   = "World"
+s:Ge/AlWire/Material = "Al"
+d:Ge/AlWire/RMax     = 250. um
+d:Ge/AlWire/HL       = Ge/Sphere/HalfSide + 0.5 cm
+d:Ge/AlWire/TransX   = 0. cm
+d:Ge/AlWire/TransY   = -2. cm #Tf/YPosition/Value cm
+d:Ge/AlWire/TransZ   = -2.5 cm #Ge/Sphere/HalfSide - 0.5 cm
+d:Ge/AlWire/RotX     = 0. deg
+d:Ge/AlWire/RotY     = 90. deg
+d:Ge/AlWire/RotZ     = 0. deg
+s:Ge/AlWire/Color    = "red"
+i:Ge/AlWire/RBins    = 2
+
+### Water Cube ###
+s:Ge/WaterCube/Type     = "TsBox"
+s:Ge/WaterCube/Parent   = "World"
+s:Ge/WaterCube/Material = "Water" #G4_WATER"
+d:Ge/WaterCube/HLX      = Ge/Sphere/HalfSide cm
+d:Ge/WaterCube/HLY      = Ge/Sphere/HalfSide cm
+d:Ge/WaterCube/HLZ      = Ge/Sphere/HalfSide cm
+d:Ge/WaterCube/TransX   = 0. cm
+d:Ge/WaterCube/TransY   = 0. cm
+d:Ge/WaterCube/TransZ   = 0. cm
+d:Ge/WaterCube/RotX     = 0. deg
+d:Ge/WaterCube/RotY     = 0. deg
+d:Ge/WaterCube/RotZ     = 0. deg
+i:Sc/WaterCube/XBins = 100
+i:Sc/WaterCube/YBins = 100
+i:Sc/WaterCube/ZBins = 100
+
+### Copper Collimator ###
+s:Ge/Collimator/Type     = "TsCylinder"
+s:Ge/Collimator/Parent   = "World"
+s:Ge/Collimator/Material = "Copper"
+d:Ge/Collimator/RMin     = 3. mm
+d:Ge/Collimator/RMax     = 5. mm
+d:Ge/Collimator/HL       = 35.375 mm
+d:Ge/Collimator/TransX   = 0. cm
+d:Ge/Collimator/TransY   = 0. cm
+d:Ge/Collimator/TransZ   = Ge/BeamZ/Position - 3.5375 cm
+d:Ge/Collimator/RotX     = 0. deg
+d:Ge/Collimator/RotY     = 0. deg
+d:Ge/Collimator/RotPhi     = 90. deg
+s:Ge/Collimator/Color    = "blue"
+#i:Ge/Collimator/RBins    = 2
+
+### Vacuum inside the Collimator ###
+s:Ge/VacuumCol/Type     = "TsCylinder"
+s:Ge/VacuumCol/Parent   = "World"
+s:Ge/VacuumCol/Material = "Vacuum"
+d:Ge/VacuumCol/RMax     = 3. mm
+d:Ge/VacuumCol/HL       = 35.375 mm
+d:Ge/VacuumCol/TransX   = 0. cm
+d:Ge/VacuumCol/TransY   = 0. cm
+d:Ge/VacuumCol/TransZ   = Ge/BeamZ/Position - 3.5375 cm
+d:Ge/VacuumCol/RotX     = 0. deg
+d:Ge/VacuumCol/RotY     = 0. deg
+d:Ge/VacuumCol/RotZ     = 0. deg
+#i:Ge/VacuumCol/RBins    = 2
+
+### Kapton Film (larger Collimator) ###
+s:Ge/KaptonFilm/Type     = "TsCylinder"
+s:Ge/KaptonFilm/Parent   = "World"
+s:Ge/KaptonFilm/Material = "Kapton"
+d:Ge/KaptonFilm/RMax     = 3. mm
+d:Ge/KaptonFilm/HL       = 0.00125 mm
+d:Ge/KaptonFilm/TransX   = 0. cm
+d:Ge/KaptonFilm/TransY   = 0. cm
+d:Ge/KaptonFilm/TransZ   = Ge/BeamZ/Position + 0.0025 cm
+d:Ge/KaptonFilm/RotX     = 0. deg
+d:Ge/KaptonFilm/RotY     = 0. deg
+d:Ge/KaptonFilm/RotZ     = 0. deg
+#i:Ge/KaptonFilm/RBins    = 2
+
+#########################################
+####            SOURCE               ####
+#########################################
+
+### Beam position ###
+s:Ge/BeamPosition/Parent = "World"
+s:Ge/BeamPosition/Type = "Group"
+d:Ge/BeamPosition/TransX = 0. m
+d:Ge/BeamPosition/TransY = 0. m
+d:Ge/BeamPosition/TransZ = Ge/BeamZ/Position - 1. cm
+d:Ge/BeamPosition/RotX = 0. deg
+d:Ge/BeamPosition/RotY = 0. deg
+d:Ge/BeamPosition/RotZ = 0. deg
+
+### Particle source ###
+s:So/ProtonSource/Type = "Beam" # Beam, Isotropic, Emittance or PhaseSpace
+s:So/ProtonSource/Component = "BeamPosition"
+s:So/ProtonSource/BeamParticle = "proton"
+d:So/ProtonSource/BeamEnergy = 10. MeV
+u:So/ProtonSource/BeamEnergySpread = 1. #=0.1 MeV/10 MeV * 100
+s:So/ProtonSource/BeamPositionDistribution = "Gaussian" # Flat or Gaussian
+s:So/ProtonSource/BeamPositionCutoffShape = "Ellipse" # Point, Ellipse, Rectangle or Isotropic
+d:So/ProtonSource/BeamPositionCutoffX = 0.5 mm
+d:So/ProtonSource/BeamPositionCutoffY = 0.5 mm
+d:So/ProtonSource/BeamPositionSpreadX = 0.3 mm
+d:So/ProtonSource/BeamPositionSpreadY = 0.3 mm
+s:So/ProtonSource/BeamAngularDistribution = "Gaussian" # Flat or Gaussian
+d:So/ProtonSource/BeamAngularCutoffX = 0.1 deg # almost twice the size of the beam
+d:So/ProtonSource/BeamAngularCutoffY = 0.1 deg
+d:So/ProtonSource/BeamAngularSpreadX = 0.0032 rad
+d:So/ProtonSource/BeamAngularSpreadY = 0.0032 rad
+i:So/ProtonSource/NumberOfHistoriesInRun = 1000
+#i:So/ProtonSource/NumberOfHistoriesInRandomJob = 10v
